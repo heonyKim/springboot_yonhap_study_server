@@ -26,7 +26,6 @@ public class NewsController {
             if(newsElement.getTitle().equals(news.getTitle())){
                 System.out.println("[현재 적재된 뉴스] "+GlobalVariables.savedNewsList.size());
                 System.out.println("[heony_dev] 동일한 뉴스가 존재하므로 적재하지 않습니다.");
-                System.out.println("[TEST");
                 return "";
             }
         }
