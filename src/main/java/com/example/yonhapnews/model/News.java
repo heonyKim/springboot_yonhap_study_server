@@ -1,15 +1,25 @@
 package com.example.yonhapnews.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class News {
 
     String title;
     String link;
     String comments;
-    Timestamp pub_data;
+    Timestamp pub_date;
     String category;
     String description;
     String content;
@@ -21,92 +31,14 @@ public class News {
     }
 
     public News(ResultSet rs) throws SQLException {
-        this.title = rs.getString(1);
-        this.link = rs.getString(2);
-        this.comments = rs.getString(3);
-        this.pub_data = rs.getTimestamp(4);
-        this.category = rs.getString(5);
-        this.description = rs.getString(6);
-        this.content = rs.getString(7);
-        this.reg_date = rs.getTimestamp(8);
+        this.title = rs.getString("title");
+        this.link = rs.getString("link");
+        this.comments = rs.getString("comments");
+        this.pub_date = rs.getTimestamp("pub_date");
+        this.category = rs.getString("category");
+        this.description = rs.getString("description");
+        this.content = rs.getString("content");
+        this.reg_date = rs.getTimestamp("reg_date");
     }
 
-    public News() {
-
-    }
-
-    public News(String title, String link, String comments, Timestamp pub_data, String category, String description, String content, Timestamp reg_date) {
-        this.title = title;
-        this.link = link;
-        this.comments = comments;
-        this.pub_data = pub_data;
-        this.category = category;
-        this.description = description;
-        this.content = content;
-        this.reg_date = reg_date;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Timestamp getPub_data() {
-        return pub_data;
-    }
-
-    public void setPub_data(Timestamp pub_data) {
-        this.pub_data = pub_data;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Timestamp getReg_date() {
-        return reg_date;
-    }
-
-    public void setReg_date(Timestamp reg_date) {
-        this.reg_date = reg_date;
-    }
 }
