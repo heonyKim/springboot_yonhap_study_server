@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class NewsController {
@@ -116,6 +117,11 @@ public class NewsController {
     public void clearNewsList(){
         GlobalVariables.savedNewsList.clear();
         System.out.println("[heony_dev] 리스트 클리어");
+    }
+
+    @GetMapping("/list")
+    public List<News> loadList(){
+        return GlobalVariables.savedNewsList;
     }
 
 }
