@@ -31,7 +31,6 @@ public class HeonyNewsController {
     private HeonyNewsService heonyNewsService;
 
     private final Gson gson = new Gson();
-    private final String DEFAULT_SAVE_FILE_PATH="C:\\Users\\dq\\Desktop";
 
     @GetMapping
     public String test(){
@@ -48,12 +47,7 @@ public class HeonyNewsController {
         allasdf.add(news1);
         allasdf.add(news2);
         allasdf.add(news3);
-        try {
-            allasdf.forEach(heonyNews -> heonyNewsRepository.save(heonyNews));
-//            heonyNewsRepository.saveAll(allasdf);
-        }catch (Exception e){
-            log.debug(e.getMessage());
-        }
+        heonyNewsService.saveAllIgnore(allasdf);
         log.debug(1111111111);
         return "1234";
     }
@@ -73,11 +67,7 @@ public class HeonyNewsController {
         allasdf.add(news1);
         allasdf.add(news2);
         allasdf.add(news3);
-        try {
-            allasdf.forEach(heonyNews -> heonyNewsRepository.save(heonyNews));
-        }catch (Exception e){
-            log.debug(e.getMessage());
-        }
+        heonyNewsService.saveAllIgnore(allasdf);
         log.debug(1111111111);
         return "1234";
     }

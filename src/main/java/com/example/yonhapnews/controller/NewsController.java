@@ -2,8 +2,10 @@ package com.example.yonhapnews.controller;
 
 import com.example.yonhapnews.GlobalVariables;
 import com.example.yonhapnews.model.News;
+import com.example.yonhapnews.utils.CustomFileUtils;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -17,8 +19,10 @@ import java.util.List;
 @RestController
 public class NewsController {
 
+    @Autowired
+    CustomFileUtils customFileUtils;
+
     private final Gson gson = new Gson();
-    private final String DEFAULT_SAVE_FILE_PATH="C:\\Users\\dq\\Desktop";
 
     @PostMapping("/collect")
     public String collectNewsListPost(@RequestBody News news){
@@ -49,26 +53,8 @@ public class NewsController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String currentTimeFormatStr = sdf.format(date);
         System.currentTimeMillis();
-        File file = new File(DEFAULT_SAVE_FILE_PATH+"\\"+"data_"+currentTimeFormatStr+".txt");
-        FileWriter writer = null;
+        customFileUtils.fileSaverToText(GlobalVariables.DEFAULT_SAVE_FILE_PATH+"\\"+"data_"+currentTimeFormatStr+".txt",toBeSavedJson);
 
-        try {
-            writer = new FileWriter(file,false);
-            writer.write(toBeSavedJson);
-            System.out.println("[heony_dev] FILE : " + file.getName() + " is saved!");
-            GlobalVariables.savedNewsList.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if(writer!=null){
-                    writer.flush();
-                    writer.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         return "";
     }
 
@@ -79,7 +65,7 @@ public class NewsController {
         if(!!!filePathForExists.exists()){
             System.out.println("[heony_dev] 파일 경로가 존재하지 않습니다.");
             System.out.println("[heony_dev] 바탕화면에 저장합니다.");
-            filePath = DEFAULT_SAVE_FILE_PATH;
+            filePath = GlobalVariables.DEFAULT_SAVE_FILE_PATH;
         }
         System.out.println("[heony_dev] SAVE Start..");
         String toBeSavedJson = gson.toJson(GlobalVariables.savedNewsList);
